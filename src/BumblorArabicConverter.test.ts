@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest'
-import {bumblor2arabic} from "./BumblorArabicConverter.ts"
+import {arabic2bumblor, bumblor2arabic} from "./BumblorArabicConverter.ts"
 
+//Bumblor to Arabic Tests
 test('Bumblor to Arabic', () => {
     expect(bumblor2arabic('MMDCLXV')).toBe(2665)
 })
@@ -32,3 +33,44 @@ test('Too Many Ls', () => {
 test('Just Enough Ls', () => {
     expect(bumblor2arabic('L')).toBe(50)
 })
+
+test('Negative bumblor2arabic', () => {
+    expect(bumblor2arabic('-L')).toBe(-50)
+})
+
+test('Too many negatives bumblor2arabic', () => {
+    expect(() => bumblor2arabic('--MM-')).toThrow(Error('Malformed Number'))
+})
+test('Out of order bumblor2arabic', () => {
+    expect(() => bumblor2arabic('XM')).toThrow(Error('Malformed Number'))
+})
+test('More out of order bumblor2arabic', () => {
+    expect(() => bumblor2arabic('MMCXLIV')).toThrow(Error('Malformed Number'))
+})
+test('More out of order bumblor2arabic', () => {
+    expect(() => bumblor2arabic('MMCXLIV')).toThrow(Error('Malformed Number'))
+})
+test('Maximum bumblor2arabic', () => {
+    expect(bumblor2arabic('MMMMDCCCCLXXXXVIIII')).toBe(4999)
+})
+test('Minimum bumblor2arabic', () => {
+    expect(bumblor2arabic('-MMMMDCCCCLXXXXVIIII')).toBe(-4999)
+})
+test('Below minimum bumblor2arabic', () => {
+    expect(() => bumblor2arabic('-MMMMDCCCCLXXXXVIIIII')).toThrow(Error('Malformed Number'))
+})
+
+//Arabic to Bumblor Tests
+test('arabic input too high', () => {
+    expect(() => arabic2bumblor(5000)).toThrow(Error('Out of Range'))
+})
+test('arabic input too low', () => {
+    expect(() => arabic2bumblor(-5000)).toThrow(Error('Out of Range'))
+})
+test('arabic2bumblor Ms', () => {
+    expect(arabic2bumblor(4000)).toBe('MMMM')
+})
+test('arabic2bumblor with D', () => {
+    expect(arabic2bumblor(3500)).toBe('MMMD')
+})
+
