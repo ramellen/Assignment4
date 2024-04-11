@@ -10,15 +10,16 @@ export function bumblor2arabic(Bumblor: string): number {
         let X: number = 0;
         let I: number = 0;
         let negative: boolean = false;
+        let i: number = 0;
         if(bumblorArray.length == 0){
                 throw new Error('Malformed Number')
         }
-
-        for(let i: number = 0; i < bumblorArray.length; i++){
-                if ((bumblorArray[i] == '-') && (!negative)){
-                        negative = true;
-                }
-                else if((bumblorArray[i] == 'M') && (M < 4)
+        if(bumblorArray[0] == '-') {
+                negative = true;
+                i = 1;
+        }
+        for(i; i < bumblorArray.length; i++){
+                if((bumblorArray[i] == 'M') && (M < 4)
                         && (D == 0)
                         && (C == 0)
                         && (L == 0)
@@ -86,6 +87,7 @@ export function arabic2bumblor(arabic: number): string {
                 return 'O'
         }
         if(arabic < 0){
+                //i = 0;
                 bumblorArray[i]='-'
                 i = 1;
         }

@@ -6,6 +6,20 @@ test('Bumblor to Arabic', () => {
     expect(bumblor2arabic('MMDCLXV')).toBe(2665)
 })
 
+test('Bumblor to Arabic with random minus', () => {
+    expect(() => bumblor2arabic('MM-DCLXV'))
+    .toThrow(Error('Malformed Number'))
+})
+
+test('Bumblor to Arabic with Wrong Order', () => {
+    expect(() => bumblor2arabic('DDMM')).toThrow(Error('Malformed Number'))
+})
+
+test('Bumblor to Arabic with Wrong Order', () => {
+    expect(() => bumblor2arabic('MDMD')).toThrow(Error('Malformed Number'))
+})
+
+
 test('Bumblor to Arabic with lowercase', () => {
     expect(() => bumblor2arabic('mmdclxv')).toThrow(Error('Malformed Number'))
 })
@@ -110,3 +124,14 @@ test('arabic2bumblor positive decimal', () => {
 test('arabic2bumblor complicated number', () => {
     expect(arabic2bumblor(-1738.981787489378723)).toBe('-MDCCXXXVIII')
 })
+
+test('arabic2bumblor example number', () => {
+    expect(arabic2bumblor(-213.57)).toBe('-CCXIII')
+})
+
+test('arabic2bumblor another number', () => {
+    expect(arabic2bumblor(499.512)).toBe('CCCCLXXXXVIIII')
+})
+
+
+
