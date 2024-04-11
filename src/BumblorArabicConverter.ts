@@ -1,18 +1,4 @@
 
-// type Bumblor = string;
-
-// let dictionary: string[][] =
-//     [
-//         ['M','1000'],
-//         ['D','500'],
-//         ['C','100'],
-//         ['L','50'],
-//         ['X','10'],
-//         ['V','5'],
-//         ['I','1'],
-//         ['O','0']
-//     ]
-
 export function bumblor2arabic(Bumblor: string): number {
         let bumblorArray: string[] = Bumblor.split('');
         var result: number = 0;
@@ -24,6 +10,9 @@ export function bumblor2arabic(Bumblor: string): number {
         let X: number = 0;
         let I: number = 0;
         let negative: boolean = false;
+        if(bumblorArray.length == 0){
+                throw new Error('Malformed Number')
+        }
 
         for(let i: number = 0; i < bumblorArray.length; i++){
                 if ((bumblorArray[i] == '-') && (!negative)){
@@ -96,7 +85,11 @@ export function arabic2bumblor(arabic: number): string {
         if(arabic == 0){
                 return 'O'
         }
-        let flooredArabic : number = Math.floor(arabic);
+        if(arabic < 0){
+                bumblorArray[i]='-'
+                i = 1;
+        }
+        let flooredArabic : number = Math.floor(Math.abs(arabic));
         for (i; ((flooredArabic/1000) >= 1); i++){
                 flooredArabic = flooredArabic - 1000;
                 bumblorArray[i] = 'M'

@@ -59,6 +59,21 @@ test('Minimum bumblor2arabic', () => {
 test('Below minimum bumblor2arabic', () => {
     expect(() => bumblor2arabic('-MMMMDCCCCLXXXXVIIIII')).toThrow(Error('Malformed Number'))
 })
+test('empty bumblor2arabic', () => {
+    expect(() => bumblor2arabic('')).toThrow(Error('Malformed Number'))
+})
+test('what bumblor2arabic', () => {
+    expect(() => bumblor2arabic('what')).toThrow(Error('Malformed Number'))
+})
+test('spaces in bumblor2arabic', () => {
+    expect(() => bumblor2arabic('MM XI')).toThrow(Error('Malformed Number'))
+})
+test('spaces before bumblor2arabic', () => {
+    expect(() => bumblor2arabic('  MMXI')).toThrow(Error('Malformed Number'))
+})
+test('spaces after bumblor2arabic', () => {
+    expect(() => bumblor2arabic('MMXI ')).toThrow(Error('Malformed Number'))
+})
 
 //Arabic to Bumblor Tests
 test('arabic input too high', () => {
@@ -73,4 +88,25 @@ test('arabic2bumblor Ms', () => {
 test('arabic2bumblor with D', () => {
     expect(arabic2bumblor(3500)).toBe('MMMD')
 })
+test('arabic2bumblor 0', () => {
+    expect(arabic2bumblor(0)).toBe('O')
+})
+test('arabic2bumblor negative input', () => {
+    expect(arabic2bumblor(-4000)).toBe('-MMMM')
+})
 
+test('arabic2bumblor max', () => {
+    expect(arabic2bumblor(4999)).toBe('MMMMDCCCCLXXXXVIIII')
+})
+test('arabic2bumblor min', () => {
+    expect(arabic2bumblor(-4999)).toBe('-MMMMDCCCCLXXXXVIIII')
+})
+test('arabic2bumblor negative decimal', () => {
+    expect(arabic2bumblor(-4000.243)).toBe('-MMMM')
+})
+test('arabic2bumblor positive decimal', () => {
+    expect(arabic2bumblor(501.892)).toBe('DI')
+})
+test('arabic2bumblor complicated number', () => {
+    expect(arabic2bumblor(-1738.981787489378723)).toBe('-MDCCXXXVIII')
+})
